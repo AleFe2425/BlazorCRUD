@@ -6,10 +6,10 @@
 
 <PageTitle>Details</PageTitle>
 
-<h1>Details</h1>
+<h1>Detalles del Producto</h1>
 
 <div>
-    <h2>Producto</h2>
+    <h2>En esta Pagina se Pueden Visualizar los Detalles Producto</h2>
     <hr />
     @if (producto is null)
     {
@@ -25,8 +25,8 @@
             <dd class="col-sm-10">@producto.Qty</dd>
         </dl>
         <div>
-            <a href="@($"/productos/edit?id={producto.Id}")">Edit</a> |
-            <a href="@($"/productos")">Back to List</a>
+            <a href="@($"/productos/edit?id={producto.Id}")" class="btn btn-info">Editar</a> |
+            <a href="@($"/productos")" class="btn btn-outline-secondary">Regresar</a>
         </div>
     }
 </div>

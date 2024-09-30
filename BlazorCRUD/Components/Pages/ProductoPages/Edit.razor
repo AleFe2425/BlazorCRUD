@@ -6,9 +6,9 @@
 
 <PageTitle>Edit</PageTitle>
 
-<h1>Edit</h1>
+<h1>Editar</h1>
 
-<h2>Producto</h2>
+<h2>En Esta Página se Puede Editar el Producto Seleccionado</h2>
 <hr />
 @if (Producto is null)
 {
@@ -37,15 +37,15 @@ else
                     <InputNumber id="qty" @bind-Value="Producto.Qty" class="form-control" />
                     <ValidationMessage For="() => Producto.Qty" class="text-danger" />
                 </div>
-                <button type="submit" class="btn btn-primary">Save</button>
+                <button type="submit" class="btn btn-primary">Guardar</button>
+                |
+                <a href="/productos" class="btn btn-outline-secondary">Regresar</a>
             </EditForm>
         </div>
     </div>
 }
 
-<div>
-    <a href="/productos">Back to List</a>
-</div>
+
 
 @code {
     [SupplyParameterFromQuery]

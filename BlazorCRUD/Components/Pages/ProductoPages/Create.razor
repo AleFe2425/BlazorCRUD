@@ -6,9 +6,9 @@
 
 <PageTitle>Create</PageTitle>
 
-<h1>Create</h1>
+<h1>Crear</h1>
 
-<h2>Producto</h2>
+<h2>En Esta Página Puedes Crear el Producto que Quieras</h2>
 <hr />
 <div class="row">
     <div class="col-md-4">
@@ -30,14 +30,13 @@
                 <InputNumber id="qty" @bind-Value="Producto.Qty" class="form-control" /> 
                 <ValidationMessage For="() => Producto.Qty" class="text-danger" /> 
             </div>        
-            <button type="submit" class="btn btn-primary">Create</button>
+            <button type="submit" class="btn btn-primary">Create</button> |
+            <a href="/productos" class="btn btn-outline-secondary">Regresar</a>
         </EditForm>
     </div>
 </div>
 
-<div>
-    <a href="/productos">Back to List</a>
-</div>
+
 
 @code {
     [SupplyParameterFromForm]
