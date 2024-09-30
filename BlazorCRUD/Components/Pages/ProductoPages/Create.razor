@@ -1,0 +1,54 @@
+﻿@page "/productos/create"
+@using Microsoft.EntityFrameworkCore
+@using BlazorCRUD.Models
+@inject IDbContextFactory<BlazorCRUD.Data.MyAppDbContext> DbFactory
+@inject NavigationManager NavigationManager
+
+<PageTitle>Create</PageTitle>
+
+<h1>Create</h1>
+
+<h2>Producto</h2>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <EditForm method="post" Model="Producto" OnValidSubmit="AddProducto" FormName="create" Enhance>
+            <DataAnnotationsValidator />
+            <ValidationSummary class="text-danger" />
+            <div class="mb-3">
+                <label for="nombre" class="form-label">Nombre:</label> 
+                <InputText id="nombre" @bind-Value="Producto.Nombre" class="form-control" /> 
+                <ValidationMessage For="() => Producto.Nombre" class="text-danger" /> 
+            </div>        
+            <div class="mb-3">
+                <label for="precio" class="form-label">Precio:</label> 
+                <InputNumber id="precio" @bind-Value="Producto.Precio" class="form-control" /> 
+                <ValidationMessage For="() => Producto.Precio" class="text-danger" /> 
+            </div>        
+            <div class="mb-3">
+                <label for="qty" class="form-label">Qty:</label> 
+                <InputNumber id="qty" @bind-Value="Producto.Qty" class="form-control" /> 
+                <ValidationMessage For="() => Producto.Qty" class="text-danger" /> 
+            </div>        
+            <button type="submit" class="btn btn-primary">Create</button>
+        </EditForm>
+    </div>
+</div>
+
+<div>
+    <a href="/productos">Back to List</a>
+</div>
+
+@code {
+    [SupplyParameterFromForm]
+    private Producto Producto { get; set; } = new();
+
+    // To protect from overposting attacks, see https://learn.microsoft.com/aspnet/core/blazor/forms/#mitigate-overposting-attacks.
+    private async Task AddProducto()
+    {
+        using var context = DbFactory.CreateDbContext();
+        context.Producto.Add(Producto);
+        await context.SaveChangesAsync();
+        NavigationManager.NavigateTo("/productos");
+    }
+}
