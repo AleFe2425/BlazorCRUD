@@ -1,4 +1,4 @@
-﻿@page "/productos/details"
+﻿@page "/productos/details"/*definimos la ruta para acceder a esta pagina*/
 @using Microsoft.EntityFrameworkCore
 @using BlazorCRUD.Models
 @inject IDbContextFactory<BlazorCRUD.Data.MyAppDbContext> DbFactory
@@ -37,14 +37,16 @@
     [SupplyParameterFromQuery]
     private Guid Id { get; set; }
 
-    protected override async Task OnInitializedAsync()
+    protected override async Task OnInitializedAsync() // Método que se ejecuta cuando se inicializa el componente.
     {
         using var context = DbFactory.CreateDbContext();
+
+        // cargar el producto correspondiente al ID proporcionado.
         producto = await context.Producto.FirstOrDefaultAsync(m => m.Id == Id);
 
-        if (producto is null)
+        if (producto is null)// si el producto no se encuentra
         {
-            NavigationManager.NavigateTo("notfound");
+            NavigationManager.NavigateTo("notfound");//se dirige a esta pagina
         }
     }
 }

@@ -1,4 +1,4 @@
-﻿@page "/productos/edit"
+﻿@page "/productos/edit" /*ruta de acceso para ingresar a esta pagina*/
 @using Microsoft.EntityFrameworkCore
 @using BlazorCRUD.Models
 @inject IDbContextFactory<BlazorCRUD.Data.MyAppDbContext> DbFactory
@@ -48,10 +48,10 @@ else
 
 
 @code {
-    [SupplyParameterFromQuery]
+    [SupplyParameterFromQuery] // Permite que el parámetro ID sea proporcionado desde la URL como un parámetro de consulta.
     private Guid Id { get; set; }
 
-    [SupplyParameterFromForm]
+    [SupplyParameterFromForm] // Permite que el modelo Producto sea proporcionado desde el formulario.
     private Producto? Producto { get; set; }
 
     protected override async Task OnInitializedAsync()
@@ -65,22 +65,23 @@ else
         }
     }
 
-    // To protect from overposting attacks, enable the specific properties you want to bind to.
-    // For more information, see https://learn.microsoft.com/aspnet/core/blazor/forms/#mitigate-overposting-attacks.
+    
+
+    // Método para actualizar el producto en la base de datos.
     private async Task UpdateProducto()
     {
-        using var context = DbFactory.CreateDbContext();
-        context.Attach(Producto!).State = EntityState.Modified;
+        using var context = DbFactory.CreateDbContext();// Crea una nueva instancia del contexto de la base de datos.
+        context.Attach(Producto!).State = EntityState.Modified;// Marca el producto como modificado.
 
         try
         {
-            await context.SaveChangesAsync();
+            await context.SaveChangesAsync(); // Guarda los cambios en la base de datos.
         }
         catch (DbUpdateConcurrencyException)
         {
-            if (!ProductoExists(Producto!.Id))
+            if (!ProductoExists(Producto!.Id)) // Verifica si el producto todavía existe.
             {
-                NavigationManager.NavigateTo("notfound");
+                NavigationManager.NavigateTo("notfound"); //si no nos redirige a no encontrado
             }
             else
             {
@@ -88,12 +89,15 @@ else
             }
         }
 
-        NavigationManager.NavigateTo("/productos");
+        NavigationManager.NavigateTo("/productos"); // Redirige a la lista de productos después de guardar.
     }
+
+
+    // Método para verificar si el producto existe en la base de datos.
 
     private bool ProductoExists(Guid id)
     {
-        using var context = DbFactory.CreateDbContext();
-        return context.Producto.Any(e => e.Id == id);
-    }
+        using var context = DbFactory.CreateDbContext(); // Crea una nueva instancia del contexto de la base de datos.
+        return context.Producto.Any(e => e.Id == id); // Verifica si existe un producto con el ID proporcionado.
+    }  
 }

@@ -1,4 +1,4 @@
-﻿@page "/productos"
+﻿@page "/productos" /*ruta de acceso para ingresar a esta pagina*/
 @using Microsoft.EntityFrameworkCore
 @using Microsoft.AspNetCore.Components.QuickGrid
 @using BlazorCRUD.Models
@@ -11,14 +11,14 @@
 <h1>Index</h1>
 
 <p>
-    <a href="productos/create" class="btn btn-primary">Crear Nuevo Producto</a>
+    <a href="productos/create" class="btn btn-primary">Crear Nuevo Producto</a> 
 </p>
 
-<QuickGrid Class="table" Items="context.Producto">
+<QuickGrid Class="table" Items="context.Producto">  
     <PropertyColumn Property="producto => producto.Nombre" />
-    <PropertyColumn Property="producto => producto.Precio" />
-    <PropertyColumn Property="producto => producto.Qty" />
-
+    <PropertyColumn Property="producto => producto.Precio" /> 
+    <PropertyColumn Property="producto => producto.Qty" />  
+         
     <TemplateColumn Context="producto">
         <a href="@($"productos/edit?id={producto.Id}")" class="btn btn-info">Editar</a> |
         <a href="@($"productos/details?id={producto.Id}")" class=" btn btn-success">Detalles</a> |
@@ -27,12 +27,12 @@
 </QuickGrid>
 
 @code {
-    private MyAppDbContext context = default!;
+    private MyAppDbContext context = default!; // Variable para almacenar el contexto de la base de datos.
 
-    protected override void OnInitialized()
+    protected override void OnInitialized() // Método que se ejecuta cuando se inicializa el componente.
     {
-        context = DbFactory.CreateDbContext();
+        context = DbFactory.CreateDbContext(); // Crea una nueva instancia del contexto de la base de datos.
     }
 
-    public async ValueTask DisposeAsync() => await context.DisposeAsync();
+    public async ValueTask DisposeAsync() => await context.DisposeAsync(); // Método para liberar recursos asíncronamente cuando el componente se destruye.
 }

@@ -1,4 +1,4 @@
-﻿@page "/productos/create"
+﻿@page "/productos/create" /*Define la ruta para acceder a esta página*/
 @using Microsoft.EntityFrameworkCore
 @using BlazorCRUD.Models
 @inject IDbContextFactory<BlazorCRUD.Data.MyAppDbContext> DbFactory
@@ -15,6 +15,8 @@
         <EditForm method="post" Model="Producto" OnValidSubmit="AddProducto" FormName="create" Enhance>
             <DataAnnotationsValidator />
             <ValidationSummary class="text-danger" />
+
+
             <div class="mb-3">
                 <label for="nombre" class="form-label">Nombre:</label> 
                 <InputText id="nombre" @bind-Value="Producto.Nombre" class="form-control" /> 
@@ -42,12 +44,12 @@
     [SupplyParameterFromForm]
     private Producto Producto { get; set; } = new();
 
-    // To protect from overposting attacks, see https://learn.microsoft.com/aspnet/core/blazor/forms/#mitigate-overposting-attacks.
+    // Método que se ejecuta al enviar el formulario.
     private async Task AddProducto()
     {
-        using var context = DbFactory.CreateDbContext();
-        context.Producto.Add(Producto);
-        await context.SaveChangesAsync();
-        NavigationManager.NavigateTo("/productos");
+        using var context = DbFactory.CreateDbContext(); // Crea una nueva instancia del contexto de la base de datos.
+        context.Producto.Add(Producto); //Agrega el nuevo Producto 
+        await context.SaveChangesAsync(); // se guarda en la base de datos
+        NavigationManager.NavigateTo("/productos"); //regresamos a la lista de productos 
     }
 }

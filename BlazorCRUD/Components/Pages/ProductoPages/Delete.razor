@@ -1,4 +1,4 @@
-﻿@page "/productos/delete"
+﻿@page "/productos/delete" /*ruta para acceder pagina elimninacion*/
 @using Microsoft.EntityFrameworkCore
 @using BlazorCRUD.Models
 @inject IDbContextFactory<BlazorCRUD.Data.MyAppDbContext> DbFactory
@@ -12,11 +12,11 @@
 <div>
     <h2>Producto</h2>
     <hr />
-    @if (producto is null)
+    @if (producto is null)//verificamos si el producto es nulo
     {
-        <p><em>Loading...</em></p>
+        <p><em>Loading...</em></p>//mensaje si el producto ha sido cargado
     }
-    else {
+    else { //muestra los detalles del producto si se cargo 
         <dl class="row">
             <dt class="col-sm-2">Nombre</dt>
             <dd class="col-sm-10">@producto.Nombre</dd>
@@ -37,27 +37,27 @@
 </div>
 
 @code {
-    private Producto? producto;
+    private Producto? producto; // Propiedad para almacenar el producto a eliminar.
 
     [SupplyParameterFromQuery]
     private Guid Id { get; set; }
 
-    protected override async Task OnInitializedAsync()
+    protected override async Task OnInitializedAsync() // Método que se ejecuta cuando se inicializa el componente.
     {
         using var context = DbFactory.CreateDbContext();
         producto = await context.Producto.FirstOrDefaultAsync(m => m.Id == Id);
 
-        if (producto is null)
+        if (producto is null) // Si no se encuentra el producto, redirige a la página de no encontrado.
         {
             NavigationManager.NavigateTo("notfound");
         }
     }
 
-    private async Task DeleteProducto()
+    private async Task DeleteProducto()//metodo usado para eliminar el producto 
     {
-        using var context = DbFactory.CreateDbContext();
-        context.Producto.Remove(producto!);
-        await context.SaveChangesAsync();
-        NavigationManager.NavigateTo("/productos");
+        using var context = DbFactory.CreateDbContext();//crear instanacio del contexto en la DB
+        context.Producto.Remove(producto!);//Elimina el Producto
+        await context.SaveChangesAsync();//se guardan los cambios en la DB
+        NavigationManager.NavigateTo("/productos");//redirige a la pagina de lista de produtos
     }
 }
